@@ -5,8 +5,6 @@ import (
 	"os"
 )
 
-// Переменные будут переопределяться через ldflags на этапе сборки
-
 var (
 	BuildDBHost     string
 	BuildDBPort     string

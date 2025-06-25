@@ -8,7 +8,6 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// SetupLogger настраивает zerolog с ротацией логов
 func SetupLogger() {
 	logFile := &lumberjack.Logger{
 		Filename:   "logs/app.log",
