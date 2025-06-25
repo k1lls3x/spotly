@@ -5,7 +5,7 @@
 /dist/
 /out/
 .vscode/
-!important:example.env
+!example.env
 *.log
 *.tmp
 *.tempсв
