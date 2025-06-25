@@ -1,0 +1,11 @@
+.env
+/build
+/bin/
+/build/
+/dist/
+/out/
+.vscode/
+!important:example.env
+*.log
+*.tmp
+*.tempсв
