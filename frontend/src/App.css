@@ -1,0 +1,123 @@
+/* src/App.css */
+
+:root {
+  --bg-color: #0e0e0e;
+  --card-bg: #1c1c1c;
+  --primary: #008f53;
+  --text-color: #f5f5f5;
+  --text-muted: #b0b0b0;
+  --border-radius: 16px;
+}
+
+body, html, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.app {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.app-title {
+  font-size: 2.5rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.city-select select {
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  border: 1px solid var(--primary);
+  border-radius: var(--border-radius);
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.category-btn {
+  background-color: var(--card-bg);
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 1rem;
+}
+
+.category-btn:hover,
+.category-btn.active {
+  background-color: var(--primary);
+  color: #000;
+  font-weight: 600;
+}
+
+.content {
+  min-height: 300px;
+}
+
+/* CardList.css */
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CardItem.css */
+.card-item {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-6px);
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.card-content h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: var(--primary);
+}
+
+.card-content p {
+  margin: 0;
+  color: var(--text-color);
+}
+
+.card-content small {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
