@@ -8,4 +8,8 @@
 !example.env
 *.log
 *.tmp
-*.tempсв
+*.temp
+node_modules
+dist
+dist-ssr
+*.local

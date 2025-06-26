@@ -1,4 +1,4 @@
-module github.com/k1llas3x/spotly
+module spotly
 
 go 1.24.2
 
