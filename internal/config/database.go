@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-func Init()  {
+func Init() *sqlx.DB {
 	_ = godotenv.Load("../../.env")
 
 	cfg := LoadConfig()
@@ -24,5 +24,5 @@ func Init()  {
 	}
 
 	log.Info().Msg("✅ Подключение к PostgreSQL успешно")
-	return 
+	return db
 }
