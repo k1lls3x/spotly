@@ -1,64 +1,93 @@
-// src/App.tsx
-import { useState } from 'react';
+// src/App.tsx (иконки убраны, инпут подогнан под рамки)
+import { useEffect, useState } from 'react';
 import './App.css';
-import CardList from './components/CardList';
 import Logo from './components/Logo';
 
+const cities = [
+  'Ростов-на-Дону',
+  'Москва',
+  'Санкт-Петербург',
+  'Сочи',
+  'Краснодар'
+];
+
 const categories = [
-  'Музеи',
-  'Достопримечательности',
   'Клубы',
+  'Достопримечательности',
+  'Театры',
+  'Музеи',
   'Мероприятия',
   'Рестораны',
   'Кафе'
 ];
 
-function App() {
-  const [selectedCity, setSelectedCity] = useState('Ростов-на-Дону');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+export default function App() {
+  const [search, setSearch] = useState('');
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [confirmed, setConfirmed] = useState(false);
+  const [showCategories, setShowCategories] = useState(false);
 
-  const cards: any[] = []; // временно пусто, будут приходить из бэка позже
+  const filteredCities = cities.filter((city) =>
+    city.toLowerCase().includes(search.toLowerCase())
+  );
+
+  useEffect(() => {
+    if (confirmed) {
+      const timer = setTimeout(() => setShowCategories(true), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [confirmed]);
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <Logo />
-        <h1 className="app-title">Spotly</h1>
-        <div className="city-select">
-          <span>Город: </span>
-          <select
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-          >
-            <option>Ростов-на-Дону</option>
-            <option>Москва</option>
-            <option>Санкт-Петербург</option>
-            <option>Сочи</option>
-            <option>Краснодар</option>
-          </select>
-        </div>
-      </header>
+    <div className="app-wrapper">
+      <Logo />
+      <div className="city-box">
+        <h2 className="city-title">
+          {selectedCity ? `Город: ${selectedCity}` : 'Выбрать город'}
+        </h2>
 
-      <div className="category-list">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            className={`category-btn ${selectedCategory === cat ? 'active' : ''}`}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+        {!confirmed && (
+          <>
+            <input
+              className="city-search"
+              type="text"
+              placeholder="Введите город..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <div className="city-options">
+              {filteredCities.map((city) => (
+                <div
+                  key={city}
+                  className="city-option"
+                  onClick={() => setSelectedCity(city)}
+                >
+                  {city}
+                </div>
+              ))}
+            </div>
+            {selectedCity && (
+              <button className="select-btn gradient" onClick={() => setConfirmed(true)}>
+                Выбрать
+              </button>
+            )}
+          </>
+        )}
 
-      <div className="content">
-        {!selectedCategory && <p>Выберите категорию выше</p>}
-        {selectedCategory && <CardList cards={cards} />}
+        {confirmed && showCategories && (
+          <div className="category-grid">
+            {categories.map((label, index) => (
+              <div
+                key={label}
+                className="category-btn smooth"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {label}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
 }
-
-export default App;
-
-// самая главная страница ..
