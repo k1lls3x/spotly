@@ -138,3 +138,47 @@ SELECT cron.schedule(
     SELECT * FROM moved;
   $$
 );
+
+-- =======================================
+--  Дополнение: Места (places)
+-- =======================================
+
+-- 1. Таблица заведений (рестораны, клубы, парки и т.д.)
+CREATE TABLE places (
+    id            UUID    PRIMARY KEY DEFAULT gen_random_uuid(),
+    city_id       UUID    NOT NULL REFERENCES cities(id) ON DELETE CASCADE,
+    slug          TEXT    NOT NULL UNIQUE,
+    kladr_id      TEXT,
+    i18n          JSONB   DEFAULT '{}',  -- {"ru": {"title":..., "desc":..., "addr":...}}
+    average_check NUMERIC(10, 2),        -- Средний чек (в рублях)
+    rating        NUMERIC(2,1) CHECK (rating BETWEEN 0 AND 5),
+    is_deleted    BOOLEAN DEFAULT FALSE,
+    created_at    TIMESTAMPTZ DEFAULT now(),
+    updated_at    TIMESTAMPTZ DEFAULT now()
+);
+
+-- 2. Категории мест (M:N)
+CREATE TABLE place_categories (
+    place_id     UUID NOT NULL REFERENCES places(id) ON DELETE CASCADE,
+    category_id  UUID NOT NULL REFERENCES categories(id) ON DELETE RESTRICT,
+    PRIMARY KEY (place_id, category_id)
+);
+CREATE INDEX idx_place_categories_place ON place_categories(place_id);
+CREATE INDEX idx_place_categories_cat   ON place_categories(category_id);
+
+-- 3. (Опционально) Привязка событий к месту
+ALTER TABLE events
+    ADD COLUMN place_id UUID REFERENCES places(id) ON DELETE SET NULL;
+
+-- 4. Индексы
+CREATE INDEX idx_places_city ON places(city_id);
+CREATE INDEX idx_places_rating ON places(rating);
+
+-- 5. Триггер обновления updated_at для places
+CREATE TRIGGER trg_places_updated_at
+    BEFORE UPDATE ON places
+    FOR EACH ROW EXECUTE FUNCTION fn_set_updated_at();
+
+-- 6. Индекс на i18n -> title (если планируется поиск)
+CREATE INDEX idx_places_title_ru ON places
+    USING GIN ((i18n->'ru'->>'title') gin_trgm_ops);
