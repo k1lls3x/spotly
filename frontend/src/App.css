@@ -1,5 +1,3 @@
-/* Полностью восстановленный App.css с рабочей версией и классическим заголовком */
-
 :root {
   --bg-color: #121212;
   --card-bg: #1e1e1e;
@@ -91,6 +89,12 @@ body, html, #root {
   color: var(--accent-green-hover);
 }
 
+.city-option.selected {
+  background-color: var(--accent-green);
+  color: #fff;
+  font-weight: bold;
+}
+
 .select-btn {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -119,6 +123,12 @@ body, html, #root {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+  transition: opacity 0.5s ease;
+}
+
+.category-grid.hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .category-btn {
@@ -160,3 +170,88 @@ body, html, #root {
     opacity: 1;
   }
 }
+
+/* === Анкета карточек === */
+.card-view {
+  position: relative;
+  background-color: var(--container-bg);
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  max-width: 420px;
+  margin: 0 auto;
+  text-align: center;
+  box-shadow: 0 0 24px rgba(0, 255, 140, 0.1);
+}
+.card-photo {
+  width: 100%;
+  height: 260px;
+  border-radius: 16px;
+  background-color: #111;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto 1.2rem auto;
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.14);
+}
+.arrow-btn.card-left,
+.arrow-btn.card-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  background: rgba(30,60,40,0.9);
+  color: #fff;
+  font-size: 2.3rem;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 0 8px rgba(0, 191, 166, 0.18);
+  display: flex; align-items: center; justify-content: center;
+}
+.arrow-btn.card-left { left: -38px; }
+.arrow-btn.card-right { right: -38px; }
+.arrow-btn:hover { background: var(--accent-green-hover); }
+.card-indicators {
+  margin: 16px 0 8px 0;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #444; opacity: .6; cursor: pointer; transition: background 0.2s;
+}
+.dot.active { background: var(--accent-green); opacity: 1; }
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(15,19,15,0.97);
+  display: flex; align-items: center; justify-content: center; z-index: 999;
+}
+.modal-photo {
+  max-width: 92vw; max-height: 80vh; border-radius: 14px;
+  box-shadow: 0 0 22px 0 rgba(0,255,140,0.13);
+}
+.modal-arrow {
+  position: absolute;
+  top: 50%;
+  font-size: 2.6rem;
+  color: #fff;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 18px;
+  opacity: 0.83;
+  user-select: none;
+}
+.modal-close {
+  position: absolute;
+  top: 16px; right: 24px;
+  font-size: 2rem; background: none; border: none;
+  color: #eee; cursor: pointer;
+  transition: color 0.15s;
+  z-index: 1001;
+}
+.modal-close:hover { color: var(--accent-green-hover); }
