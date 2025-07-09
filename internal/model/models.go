@@ -99,3 +99,15 @@ type EventArchive struct {
     CreatedAt    time.Time  `db:"created_at" json:"created_at"`
     UpdatedAt    time.Time  `db:"updated_at" json:"updated_at"`
 }
+
+
+type PlaceDTO struct {
+	ID           uuid.UUID `json:"id"`
+	Slug         string    `json:"slug"`
+	Title        string    `json:"title"`
+	Description  string    `json:"description"`
+	Address      string    `json:"address"`
+	AverageCheck float64   `json:"average_check"`
+	Rating       float64   `json:"rating"`
+	PreviewImage *string   `json:"preview_image,omitempty"`
+}
